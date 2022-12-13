@@ -1,17 +1,38 @@
 #include "header.h"
+#include "Data.h"
+
 
 using namespace std;
+
 // Check either the vectors are with the sae ssize or not
-void check_size(int size1, int size2) {
-    if(size1 != size2) {
-        cout << "Invalid Input - Please Refer To README.md File And Try Again :)"; exit(0);
-    }
+void check_size(int size, string csv_type) {
+    if(csv_type == "iris_classified.csv") { if( size != 4) { cout << "Invalid Input - Please Refer To README.md File And Try Again :)"; exit(0); } }
+    if(csv_type == "wine_classified.csv") { if( size != 13) {cout << "Invalid Input - Please Refer To README.md File And Try Again :)"; exit(0); } }
+    if(csv_type == "beans_classified.csv") { if( size != 16) { cout << "Invalid Input - Please Refer To README.md File And Try Again :)"; exit(0); } }
+}
+
+void check_args(int size, string csv_type, string dist_func) {
+    if(size < 1 || size > 100) { cout << "Invalid Input - Please Refer To README.md File And Try Again :)"; exit(0); }
+    if(csv_type != "beans_classified.csv" && csv_type != "iris_classified.csv" && csv_type != "wine_classified.csv") { 
+        cout << "Invalid Input - Please Refer To README.md File And Try Again :)"; exit(0); }
+    if(dist_func != "AUC" && dist_func != "MAN" && dist_func != "CHB" && dist_func != "CAN" && dist_func != "MIN") {
+         cout << "Invalid Input - Please Refer To README.md File And Try Again :)"; exit(0); }
+}
+
+string fetch_path(string input) {
+    string iris_str; string beans_str; string wine_str; string chosen;
+    if(input == "iris_classified.csv") { iris_str = "iris/" + input; chosen = iris_str; }
+    if(input == "wine_classified.csv") { wine_str = "wine/" + input; chosen = wine_str; }
+    if(input == "beans_classified.csv") { beans_str = "beans/" + input; chosen = beans_str; }
+    
+    return chosen;
 }
 
 // Parsing the input which got as string into a vector with double type variabls
 vector<double> parser(string string_Vector) {
     vector<double> Vector;
     string current;
+
     for(int i = 0; i <= string_Vector.length(); i++)
     {
         if(string_Vector[i] == ' ' || string_Vector[i] == '\0') 
@@ -24,75 +45,80 @@ vector<double> parser(string string_Vector) {
     return Vector;
 }
 
-string get_label_name(int label_num, string file_name) {
-    if (file_name == "iris_classified.csv") {
-        if(label_num == 0) { return "Iris-setosa"; }
-        if(label_num == 1) { return "Iris-versicolor"; }
-        if(label_num == 2) { return "Iris-virginica"; }
+string get_label_classify(string csv_type, int label) {
+    string s = "";
+    if (csv_type == "iris_classified.csv") {
+        if(label == 0) { s = "Iris-setosa"; return s; }
+        if(label == 1) { s = "Iris-versicolor"; return s; }
+        if(label == 2) { s = "Iris-virginica"; return s; }
     }
 
-    if (file_name == "wine_classified.csv") {
-            if(label_num == 0) { return "red wine"; }
-            if(label_num == 1) { return "white wine"; }
-            if(label_num == 2) { return "Sparkling wine"; }
+    if (csv_type == "wine_classified.csv") {
+        if(label == 0) { s = "red wine"; return s; }
+        if(label == 1) { s = "white wine"; return s; }
+        if(label == 2) { s = "Sparkling wine"; return s; }
     }
 
-    if (file_name == "beans_classified.csv") {
-            if(label_num == 0) { return "SEKER"; }
-            if(label_num == 1) { return "BARBUNYA"; }
-            if(label_num == 2) { return "BOMBAY"; }
-            if(label_num == 3) { return "CALI"; }
-            if(label_num == 4) { return "HOROZ"; }
-            if(label_num == 5) { return "SIRA"; }
-            if(label_num == 6) { return "DERMASON"; }
+    if (csv_type == "beans_classified.csv") {
+        if(label == 0) { s = "SEKER"; return s; }
+        if(label == 1) { s = "BARBUNYA"; return s; }
+        if(label == 2) { s = "BOMBAY"; return s; }
+        if(label == 3) { s = "CALI"; return s; }
+        if(label == 4) { s = "HOROZ"; return s; }
+        if(label == 5) { s = "SIRA"; return s; }
+        if(label == 6) { s = "DERMASON"; return s; }
     }
-    return NULL;
+    
+    s = "Couldn't get an answer - 500 code";
+    return s;
+}
+
+
+void print_vec(vector<vector<double> > x_train) {
+    for(int i =0; i < x_train.size(); i++) {
+        for(int j =0; j < x_train[i].size(); j++) {
+            cout << x_train[i][j] << " ";
+        }
+        cout << "\n";
+    }
+}
+
+
+int get_labels_number(string csv_type) {
+    if(csv_type == "iris_classified.csv")  { return 3; }
+    if(csv_type == "wine_classified.csv") { return 3; }
+    if(csv_type == "beans_classified.csv") { return 6; }
+    return -1;
 }
 
 //Getting input from the client and fetching the results to the disnaces functions
-int main(int argc, char** argv)
-{
+int main(int argc, char* argv[]) {
+
     int k = atoi(argv[1]);
-    string file_name = argv[2];
-    string distance_method = argv[3];
+    string csv_type = argv[2];
+    string distance_function = argv[3];
+    check_args(k, csv_type, distance_function);
 
 
-    string iris_str, beans_str, wine_str, chosen;
-    
-    if(file_name == "iris_classified.csv") {
-        iris_str = "iris\\" + file_name;
-        chosen = iris_str;
-    }
-    
-    if(file_name == "beans_classified.csv") {
-        beans_str = "beans\\" + file_name;
-        chosen = beans_str;
-    }
-
-   if(file_name == "wine_classified.csv") {
-        wine_str = "wine\\" + file_name;
-        chosen = wine_str;
-    }
-
-
-    Data d(chosen);
-    d.generate_data();
-
-    vector<vector<double>> x_train = d.get_x_train();
-    vector<int> y_train = d.get_y_train();
 
     string vec_input;
-    cout << "Put an unclassified vector: " << endl;
     getline(cin, vec_input);
-
-    // vector<double> sample = {6.4,2.9,4.3,1.3};
-
     vector<double> vec = parser(vec_input);    
+    int vec_size = vec.size();
+    check_size(vec_size, csv_type);
 
-    //int vec_size = vec.size();
 
-    int imax = KNN(x_train, y_train, vec, k, distance_method);
-    string classification = get_label_name(imax, file_name);
 
-    cout << "The classification is: " << classification;
+    string chosen = fetch_path(csv_type);
+    Data d(chosen);
+    d.generate_data();
+    vector<vector<double> > x_train = d.get_x_train();
+    vector<int> y_train = d.get_y_train();
+    int labels_number = get_labels_number(csv_type);
+
+
+
+    int imax = KNN(x_train, y_train, vec, k, distance_function, labels_number);
+    string classification = get_label_classify(csv_type, imax);
+    cout << "The classification is: " << classification << "\n";
 }
