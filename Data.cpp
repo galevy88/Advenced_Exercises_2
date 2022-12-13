@@ -1,6 +1,6 @@
 #include "header.h"
+#include "Data.h"
 
-    
 
 vector<double> Data::parser(string string_Vector, int stop_idx) {
     vector<double> Vector;
@@ -24,7 +24,7 @@ string Data::reverse(string str) {
     string true_label;
     for(i; i > 0; i--) { true_label += str[i]; }
     return true_label;
-}
+    }
 
 int Data::get_label_number(string label) {
     
@@ -48,35 +48,38 @@ int Data::get_label_number(string label) {
 }
 
 void Data::create_split(string line, vector<double>& vec, int& label_num) {
-    int line_length = line.size(); 
-    int i = line_length;
-    string label = "";
-    int idx_of_split;
-    for(i; i > 0; i--) {
-        if(line[i] == ',') { idx_of_split = i; break; }
-        else{ label += line[i]; }
+    if(line != "") {
+        int line_length = line.size(); 
+        int i = line_length;
+        string label = "";
+        int idx_of_split;
+        for(i; i > 0; i--) {
+            if(line[i] == ',') { idx_of_split = i; break; }
+            else{ label += line[i]; }
+        }
+        string r = reverse(label);
+        label_num = get_label_number(r);
+        vec = parser(line, idx_of_split);
     }
-    string r = reverse(label);
-    //cout << label.size() << " " << r.size() << "\n";
-    label_num = get_label_number(r);
-    //cout << reverse(label) << " " << label_num << "\n";
-    vec = parser(line, idx_of_split);
 }
 
 
 vector<vector<double>> Data::get_x_train() { return this->x_train; }
 vector<int> Data::get_y_train() { return this->y_train; }
 
+
+
 void Data::generate_data() {
-ifstream inputFile; inputFile.open("datasets\\" + this->path);
-string line = "";
-vector<double> current_vec;
-int label;
-while(getline(inputFile, line)) {
-    create_split(line , current_vec, label);
-    line = ""; 
-    this->x_train.push_back(current_vec);
-    this->y_train.push_back(label);
+    ifstream inputFile; inputFile.open("datasets/" + this->path);
+    if (!inputFile.good()) { std::cerr << "Error: unable to open file " << this->path << std::endl << " Probably check if you are using Win or Linux"; return; }
+    string line = "";
+    vector<double> current_vec;
+    int label;
+    while(getline(inputFile, line)) {
+        create_split(line , current_vec, label);
+        line = ""; 
+        this->x_train.push_back(current_vec);
+        this->y_train.push_back(label);
     } 
 }
 
