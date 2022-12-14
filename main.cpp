@@ -44,7 +44,7 @@ vector<double> parser(string string_Vector) {
     }
     return Vector;
 }
-
+// get lbl str by lbl int
 string get_label_classify(string csv_type, int label) {
     string s = "";
     if (csv_type == "iris_classified.csv") {
@@ -73,7 +73,7 @@ string get_label_classify(string csv_type, int label) {
     return s;
 }
 
-
+// print vector - depricated
 void print_vec(vector<vector<double> > x_train) {
     for(int i =0; i < x_train.size(); i++) {
         for(int j =0; j < x_train[i].size(); j++) {
@@ -83,7 +83,7 @@ void print_vec(vector<vector<double> > x_train) {
     }
 }
 
-
+// get how much label exist for each dataset
 int get_labels_number(string csv_type) {
     if(csv_type == "iris_classified.csv")  { return 3; }
     if(csv_type == "wine_classified.csv") { return 3; }
@@ -104,6 +104,7 @@ int main(int argc, char* argv[]) {
 
         string vec_input;
         getline(cin, vec_input);
+        if(vec_input == "-1") { exit(0); }
         vector<double> vec = parser(vec_input);    
         int vec_size = vec.size();
         check_size(vec_size, csv_type);
