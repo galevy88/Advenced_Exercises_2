@@ -48,7 +48,7 @@ int Data::get_label_number(string label) {
     return -1;
 }
 
-// create split of str
+// create split of str by ","
 void Data::create_split(string line, vector<double>& vec, int& label_num) {
     if(line != "") {
         int line_length = line.size(); 
