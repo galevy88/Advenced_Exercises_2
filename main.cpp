@@ -38,7 +38,7 @@ vector<double> parser(string string_Vector) {
         if(string_Vector[i] == ' ' || string_Vector[i] == '\0') 
         {
             try { Vector.push_back(stod(current)); current = ""; } 
-            catch (...) { cout << "Invalid Input - Please Refer To README.md File And Try Again :)"; exit(0); }
+            catch (...) { cout << "Invalid Input - Please Refer To README.md File And Try Again :)\nWe closed the problem for you until you will read the read me file.\nPlease read the README.md file and run this program another time\n"; exit(0); }
         }
         else { current += string_Vector[i]; }
     }
@@ -120,5 +120,7 @@ int main(int argc, char* argv[]) {
         int imax = KNN(x_train, y_train, vec, k, distance_function, labels_number);
         string classification = get_label_classify(csv_type, imax);
         cout << "The classification is: " << classification << "\n";
+
+        vec_input = "";
     }
 }
