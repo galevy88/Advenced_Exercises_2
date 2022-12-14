@@ -13,7 +13,7 @@ In this Excercise we have to make an implementation for 5 types of distances:
 When you run the file you wil face an empty line for input there you will have the insert your vector input.
 The insertation of the vector should be with spaces between the numbers like the following example:
 
-![image](https://user-images.githubusercontent.com/91119719/201958054-2de873be-650b-4dc6-bfd8-021ca4f2b302.png)
+![image](https://user-images.githubusercontent.com/91119719/207488828-9018edc3-73cb-4c85-8d2c-ea6d09c88ec0.png)
 
 The code will compute the distances between the sample vector you inserted to all of the samples and will send you the following output:
 
