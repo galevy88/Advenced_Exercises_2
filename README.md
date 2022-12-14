@@ -1,5 +1,5 @@
 
-# Advenced_Exercises
+# Advenced_Exercises - UNIX only
 This repo used for Advenced computing exercise 2
 In this exercise we had to make KNN algorithm using cpp. KNN in a primitive ML algorithm that get as an input Data that seperate into 2 main parts: features and labels. Based on the features we want to make a prediction for a label for a new sample of data. The way KNN works is by calculating a distance function between the new sample to all the data in the training set. the label of the most fluent sampels with the smallest distance will be the prediction label of the new sample.
 
