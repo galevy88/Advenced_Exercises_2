@@ -19,6 +19,8 @@ The code will compute the distances between the sample vector you inserted to al
 
 ![image](https://user-images.githubusercontent.com/91119719/207488348-f6a7379b-ee1b-4693-afdf-2311f77abe59.png)
 
+The our that you will get is the class out by the KNN model
+
 # IMPORTANT CLARIFICATION:
 1. The size of iris vector must be 4, wine vectors must be 13 and beans vector must be 16
 2. Each number within each vector must be seperated with spaces - Only 1 Space seperate between 2 numbers!
@@ -34,5 +36,5 @@ In this repo there is a makefile for compiling the program. The instruction for 
 2. use ls to see that indeed a.out file was created
 3. run <code>./a.out \<K> \<Data.csv> \<distance function> </code>
 4. K = Notice K must be a number between 1 - 100 (Can be double but know that double double will be rounded - better to use int)
-5. Data file must be only fro this group = {iris_classified.csv, wine_Classified.csv, beans_Cllasified.csv} - Other input will now accept
+5. Data file must be only fro this group = {iris_classified.csv, wine_Classified.csv, beans_Classified.csv} - Other input will now accept
 6. Distance function will be from the group = {AUC, MAN, CHB, CAN, MIN} - Other input will not accept
