@@ -38,7 +38,7 @@ vector<double> parser(string string_Vector) {
         if(string_Vector[i] == ' ' || string_Vector[i] == '\0') 
         {
             try { Vector.push_back(stod(current)); current = ""; } 
-            catch (...) { cout << "Invalid Input - Please Refer To README.md File And Try Again :)\nWe closed the problem for you until you will read the read me file.\nPlease read the README.md file and run this program another time\n"; exit(0); }
+            catch (...) { cout << "Invalid Input - Please Refer To README.md File And Try Again :)\nWe closed the program for you until you will read the read me file.\nPlease read the README.md file and run this program another time\n"; exit(0); }
         }
         else { current += string_Vector[i]; }
     }
@@ -94,6 +94,7 @@ int get_labels_number(string csv_type) {
 //Getting input from the client and fetching the results to the disnaces functions
 int main(int argc, char* argv[]) {
     //The code will always run and wait for the next output from the user endlessly
+    if (argc != 4) { cout << "Invalid Input - Please Refer To README.md File And Try Again :)\nWe closed the program for you until you will read the read me file.\nPlease read the README.md file and run this program another time\n"; exit(0); }
     while (true)
     {
         int k = atoi(argv[1]);
